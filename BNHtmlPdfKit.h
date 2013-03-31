@@ -72,7 +72,11 @@ The paper size of the generated PDF.
 @property (nonatomic, assign) BNPageSize pageSize;
 
 /**
+Initializes BNHtmlPdfKit with a BNPageSize.
 
+@param pageSize The page size the output should be at.
+
+@return An initialized `BNHtmlPdfKit` object.
 */
 - (id)initWithPageSize:(BNPageSize)pageSize;
 
