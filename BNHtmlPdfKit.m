@@ -16,6 +16,10 @@
 
 @implementation BNHtmlPdfKit
 
+#pragma mark - Accessors
+
+@synthesize pageSize = _pageSize;
+
 #pragma mark - UIWebViewDelegate
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
