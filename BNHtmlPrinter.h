@@ -66,4 +66,9 @@ typedef enum {
 
 @interface BNHtmlPrinter : NSObject
 
+/**
+The paper size of the generated PDF.
+*/
+@property (nonatomic, assign) BNPageSize pageSize;
+
 @end;
