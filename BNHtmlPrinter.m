@@ -7,6 +7,8 @@
 
 #import "BNHtmlPrinter.h"
 
+#define BNRectMake(width, height) CGRectMake(0, 0, width, height)
+
 @interface BNHtmlPrinter ()
 - (CGRect)_rectFromPageSize:(BNPageSize)pageSize;
 @end
