@@ -71,4 +71,9 @@ The paper size of the generated PDF.
 */
 @property (nonatomic, assign) BNPageSize pageSize;
 
+/**
+
+*/
+- (id)initWithPageSize:(BNPageSize)pageSize;
+
 @end;

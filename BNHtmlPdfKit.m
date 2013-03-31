@@ -20,6 +20,15 @@
 
 @synthesize pageSize = _pageSize;
 
+#pragma mark - Initializers
+
+- (id)initWithPageSize:(BNPageSize)pageSize {
+	if (self = [super init]) {
+		_pageSize = pageSize;
+	}
+	return self;
+}
+
 #pragma mark - UIWebViewDelegate
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
