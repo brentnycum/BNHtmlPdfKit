@@ -1,20 +1,20 @@
 //
-//  BNHtmlPrinter.m
+//  BNHtmlPdfKit.m
 //
 //  Created by Brent Nycum.
 //  Copyright (c) 2013 Brent Nycum. All rights reserved.
 //
 
-#import "BNHtmlPrinter.h"
+#import "BNHtmlPdfKit.h"
 
 #define PPI 72
 #define BNRectMake(width, height) CGRectMake(0, 0, width * PPI, height * PPI)
 
-@interface BNHtmlPrinter ()
+@interface BNHtmlPdfKit ()
 - (CGRect)_rectFromPageSize:(BNPageSize)pageSize;
 @end
 
-@implementation BNHtmlPrinter
+@implementation BNHtmlPdfKit
 
 - (CGRect)_rectFromPageSize:(BNPageSize)pageSize {
 	switch (pageSize) {

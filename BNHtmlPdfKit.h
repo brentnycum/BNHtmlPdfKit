@@ -1,5 +1,5 @@
 //
-//  BNHtmlPrinter.h
+//  BNHtmlPdfKit.h
 //
 //  Created by Brent Nycum.
 //  Copyright (c) 2013 Brent Nycum. All rights reserved.
@@ -64,7 +64,7 @@ typedef enum {
 	BNPageSizeCustom
 } BNPageSize;
 
-@interface BNHtmlPrinter : NSObject
+@interface BNHtmlPdfKit : NSObject
 
 /**
 The paper size of the generated PDF.
