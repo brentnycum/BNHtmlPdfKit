@@ -10,11 +10,19 @@
 #define PPI 72
 #define BNRectMake(width, height) CGRectMake(0, 0, width * PPI, height * PPI)
 
-@interface BNHtmlPdfKit ()
+@interface BNHtmlPdfKit () <UIWebViewDelegate>
 - (CGRect)_rectFromPageSize:(BNPageSize)pageSize;
 @end
 
 @implementation BNHtmlPdfKit
+
+#pragma mark - UIWebViewDelegate
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+
+}
+
+#pragma mark - Private Methods
 
 - (CGRect)_rectFromPageSize:(BNPageSize)pageSize {
 	switch (pageSize) {
