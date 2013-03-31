@@ -7,7 +7,15 @@
 
 #import "BNHtmlPrinter.h"
 
+@interface BNHtmlPrinter ()
+- (CGRect)_rectFromPageSize:(BNPageSize)pageSize;
+@end
+
 @implementation BNHtmlPrinter
+
+- (CGRect)_rectFromPageSize:(BNPageSize)pageSize {
+	return CGRectZero;
+}
 
 @end
 
