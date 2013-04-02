@@ -59,6 +59,18 @@
     [webView loadHTMLString:html baseURL:[NSURL URLWithString:@"http://localhost"]];
 }
 
+- (void)saveUrlAsPdf:(NSURL *)url {
+    [self saveUrlAsPdf:url toFile:nil];
+}
+
+- (void)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)file {
+    _outputFile = file;
+    
+    UIWebView *webView = [[[UIWebView alloc] init] autorelease];
+    webView.delegate = self;
+    [webView loadRequest:[NSURLRequest requestWithURL:url]];
+}
+
 #pragma mark - UIWebViewDelegate
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {

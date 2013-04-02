@@ -123,6 +123,21 @@ Saves an html string to PDF data.
  */
 - (void)saveHtmlAsPdf:(NSString *)html toFile:(NSString *)file;
 
+/**
+ Saves an html string to PDF data.
+ 
+ @param url The URL to save as a pdf.
+ */
+- (void)saveUrlAsPdf:(NSURL *)url;
+
+
+/**
+ Saves an html string to a PDF file.
+ 
+ @param url The URL to save as a pdf file.
+ */
+- (void)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)file;
+
 @end;
 
 
