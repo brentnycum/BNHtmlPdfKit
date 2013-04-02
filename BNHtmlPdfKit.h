@@ -142,12 +142,12 @@ Saves an html string to a PDF file.
 
 
 /**
- The `BNHtmlPdfKitDelegate` protocol defines methods that a delegate of a `BNHtmlPdfKit` object that provides feedback
- based on the operations being performed.
+The `BNHtmlPdfKitDelegate` protocol defines methods that a delegate of a `BNHtmlPdfKit` object that provides feedback
+based on the operations being performed.
  
- @warning **Important:** Before releasing an instance of `SSWebView` set the `BNHtmlPdfKit` delegate property to `nil` 
- before disposing of the `BNHtmlPdfKit` instance. This can be done in the `dealloc` method.
- */
+@warning **Important:** Before releasing an instance of `SSWebView` set the `BNHtmlPdfKit` delegate property to `nil`
+before disposing of the `BNHtmlPdfKit` instance. This can be done in the `dealloc` method.
+*/
 @protocol BNHtmlPdfKitDelegate <NSObject>
 
 @end;
