@@ -138,8 +138,22 @@
     
     UIGraphicsEndPDFContext();
     
+    if ([_delegate respondsToSelector:@selector(htmlPdfKit:didSavePdfData:)]) {
+        [_delegate htmlPdfKit:self didSavePdfData:currentReportData];
+    }
+    
     if (_outputFile) {
         [currentReportData writeToFile:_outputFile atomically:YES];
+        
+        if ([_delegate respondsToSelector:@selector(htmlPdfKit:didSavePdfFile:)]) {
+            [_delegate htmlPdfKit:self didSavePdfFile:_outputFile];
+        }
+    }
+}
+
+-(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    if ([_delegate respondsToSelector:@selector(htmlPdfKit:didFailWithError:)]) {
+        [_delegate htmlPdfKit:self didFailWithError:error];
     }
 }
 

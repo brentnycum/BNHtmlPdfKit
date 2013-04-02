@@ -160,4 +160,29 @@ before disposing of the `BNHtmlPdfKit` instance. This can be done in the `deallo
 */
 @protocol BNHtmlPdfKitDelegate <NSObject>
 
+@optional
+
+/**
+Sent when pdf data has been generated.
+ 
+@param htmlPdfKit The `BNHtmlPdfKit` that data is being saved from.
+@param data The PDF data that was created from HTML/URL.
+*/
+- (void)htmlPdfKit:(BNHtmlPdfKit *)htmlPdfKit didSavePdfData:(NSData *)data;
+
+/**
+Sent when pdf data has been generated.
+ 
+@param htmlPdfKit The `BNHtmlPdfKit` that data is being saved from.
+@param data The PDF data that was created from HTML/URL.
+*/
+- (void)htmlPdfKit:(BNHtmlPdfKit *)htmlPdfKit didSavePdfFile:(NSString *)file;
+
+/**
+Sent when there was an error trying to generate the PDF.
+ 
+@param htmlPdfKit The `BNHtmlPdfKit` that theerror generated from.
+*/
+- (void)htmlPdfKit:(BNHtmlPdfKit *)htmlPdfKit didFailWithError:(NSError *)error;
+
 @end;
