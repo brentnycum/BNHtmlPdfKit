@@ -117,25 +117,25 @@ Saves an html string to PDF data.
 
 
 /**
- Saves an html string to a PDF file.
+Saves an html string to a PDF file.
  
- @param html The HTML to save as a pdf file.
- */
+@param html The HTML to save as a pdf file.
+*/
 - (void)saveHtmlAsPdf:(NSString *)html toFile:(NSString *)file;
 
 /**
- Saves an html string to PDF data.
+Saves an html string to PDF data.
  
- @param url The URL to save as a pdf.
- */
+@param url The URL to save as a pdf.
+*/
 - (void)saveUrlAsPdf:(NSURL *)url;
 
 
 /**
- Saves an html string to a PDF file.
+Saves an html string to a PDF file.
  
- @param url The URL to save as a pdf file.
- */
+@param url The URL to save as a pdf file.
+*/
 - (void)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)file;
 
 @end;
