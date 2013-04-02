@@ -115,7 +115,32 @@
 #pragma mark - UIWebViewDelegate
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
+    UIPrintFormatter *formatter = webView.viewPrintFormatter;
     
+    BNHtmlPdfKitPageRenderer *renderer = [[[BNHtmlPdfKitPageRenderer alloc] init] autorelease];
+    renderer.topAndBottomMarginSize = _topAndBottomMarginSize;
+    renderer.leftAndRightMarginSize = _leftAndRightMarginSize;
+    
+    [renderer addPrintFormatter:formatter startingAtPageAtIndex:0];
+    
+    NSMutableData *currentReportData = [NSMutableData data];
+    
+    UIGraphicsBeginPDFContextToData(currentReportData, CGRectZero, nil);
+    
+    [renderer prepareForDrawingPages:NSMakeRange(0, 1)];
+    
+    int pages = [renderer numberOfPages];
+    
+    for (int i = 0; i < pages; i++) {
+        UIGraphicsBeginPDFPage();
+        [renderer drawPageAtIndex:i inRect:renderer.paperRect];
+    }
+    
+    UIGraphicsEndPDFContext();
+    
+    if (_outputFile) {
+        [currentReportData writeToFile:_outputFile atomically:YES];
+    }
 }
 
 #pragma mark - Private Methods
