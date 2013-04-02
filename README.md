@@ -8,7 +8,9 @@ If you are using BNHtmlPdfKit in your app I would love to [hear about it](mailto
 
 Just copy `BNHtmlPdfKit.h` and `BNHtmlPdfKit.m` into your project.
 
-CocoaPod spec coming soon!
+```ruby
+pod 'BNHtmlPdfKit', :git => 'https://github.com/brentnycum/BNHtmlPdfKit'
+```
 
 ## Background
 
