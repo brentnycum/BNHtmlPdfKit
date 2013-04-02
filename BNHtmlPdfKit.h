@@ -72,6 +72,11 @@ The paper size of the generated PDF.
 @property (nonatomic, assign) BNPageSize pageSize;
 
 /**
+Custom page size.
+*/
+@property (nonatomic, assign) CGRect customPageSize;
+
+/**
 Initializes BNHtmlPdfKit with a BNPageSize.
 
 @param pageSize The page size the output should be at.

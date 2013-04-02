@@ -19,6 +19,7 @@
 #pragma mark - Accessors
 
 @synthesize pageSize = _pageSize;
+@synthesize customPageSize = _customPageSize;
 
 #pragma mark - Initializers
 
@@ -144,7 +145,7 @@
 		case BNPageSizeJapaneseB12:
 			return BNRectMakeWithPPI(0.63f, 0.87f);
 		case BNPageSizeCustom:
-			return CGRectZero;
+			return _customPageSize;
 	}
 	return CGRectZero;
 }
