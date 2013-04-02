@@ -1,8 +1,8 @@
 # BNHtmlPdfKit
 
-BNHtmlPdfKit easily turns HTML data from an HTML string or URL into a PDF file. Feel free to fork this project and help make it better!
+BNHtmlPdfKit easily turns HTML data from an HTML string or URL into a PDF file on iOS. Feel free to fork this project and help make it better!
 
-If you are using BNHtmlPdfKit in your app I would love to hear about it!
+If you are using BNHtmlPdfKit in your app I would love to [hear about it](mailto:brentnycum@gmail.com)!
 
 ## Adding BNHtmlPdfKit To Your Project
 
