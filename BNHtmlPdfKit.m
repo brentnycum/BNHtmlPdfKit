@@ -107,7 +107,7 @@
 - (void)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)file {
     _outputFile = file;
     
-    UIWebView *webView = [[[UIWebView alloc] init] autorelease];
+    UIWebView *webView = [[UIWebView alloc] init];
     webView.delegate = self;
     [webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
