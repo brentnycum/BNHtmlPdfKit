@@ -30,6 +30,12 @@
 	return self;
 }
 
+#pragma mark - Methods
+
+- (CGRect)pageSizeRect {
+	return [self _rectFromPageSize:_pageSize];
+}
+
 #pragma mark - UIWebViewDelegate
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
