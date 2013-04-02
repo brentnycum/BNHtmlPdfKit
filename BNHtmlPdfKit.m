@@ -22,6 +22,8 @@
 
 @synthesize pageSize = _pageSize;
 @synthesize customPageSize = _customPageSize;
+@synthesize topAndBottomMarginSize = _topAndBottomMarginSize;
+@synthesize leftAndRightMarginSize = _leftAndRightMarginSize;
 @synthesize delegate = _delegate;
 
 #pragma mark - Initializers

@@ -79,6 +79,16 @@ Custom page size.
 @property (nonatomic, assign) CGRect customPageSize;
 
 /**
+Top and Bottom page margins.
+*/
+@property (nonatomic, assign) CGFloat topAndBottomMarginSize;
+
+/**
+Left and Right page margins.
+*/
+@property (nonatomic, assign) CGFloat leftAndRightMarginSize;
+
+/**
  The receiver's `delegate`.
  
  The `delegate` is sent messages when content is loading.
