@@ -24,6 +24,8 @@ This all started with a [post of mine](http://itsbrent.net/2011/06/printing-conv
 - (id)initWithCustomPageSize:(CGRect)pageSize;
 ```
 
+Default initializer has default page size of letter and 1/4" margins.
+
 ### Saving a URL 
 
 ```objective-c
