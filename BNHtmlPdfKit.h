@@ -108,6 +108,21 @@ The size of the paper to print on.
 */
 - (CGRect)pageSizeRect;
 
+/**
+Saves an html string to PDF data.
+
+@param html The HTML to save as a pdf.
+*/
+- (void)saveHtmlAsPdf:(NSString *)html;
+
+
+/**
+ Saves an html string to a PDF file.
+ 
+ @param html The HTML to save as a pdf file.
+ */
+- (void)saveHtmlAsPdf:(NSString *)html toFile:(NSString *)file;
+
 @end;
 
 

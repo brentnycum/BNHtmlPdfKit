@@ -10,7 +10,9 @@
 #define PPI 72
 #define BNRectMakeWithPPI(width, height) CGRectMake(0, 0, width * PPI, height * PPI)
 
-@interface BNHtmlPdfKit () <UIWebViewDelegate>
+@interface BNHtmlPdfKit () <UIWebViewDelegate> {
+    NSString *_outputFile;
+}
 - (CGRect)_rectFromPageSize:(BNPageSize)pageSize;
 @end
 
@@ -45,10 +47,22 @@
 	return [self _rectFromPageSize:_pageSize];
 }
 
+- (void)saveHtmlAsPdf:(NSString *)html {
+    [self saveHtmlAsPdf:html toFile:nil];
+}
+
+- (void)saveHtmlAsPdf:(NSString *)html toFile:(NSString *)file {
+    _outputFile = file;
+    
+    UIWebView *webView = [[[UIWebView alloc] init] autorelease];
+    webView.delegate = self;
+    [webView loadHTMLString:html baseURL:[NSURL URLWithString:@"http://localhost"]];
+}
+
 #pragma mark - UIWebViewDelegate
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-
+    
 }
 
 #pragma mark - Private Methods
