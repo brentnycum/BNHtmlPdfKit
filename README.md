@@ -14,7 +14,7 @@ pod 'BNHtmlPdfKit', :git => 'https://github.com/brentnycum/BNHtmlPdfKit'
 
 ## Background
 
-This all started with a [post of mine](http://itsbrent.net/2011/06/printing-converting-uiwebview-to-pdf/) back in June of 2011, when I was trying to save Html data to a PDF and copy the PDF data to an email as an attachment. I had always wanted to make the code better and was finally able to. The post of mine generates a bunch of traffic to my blog to this day, by an order of 10 fold to the next top page. 
+This all started with a [post of mine](http://itsbrent.net/2011/06/printing-converting-uiwebview-to-pdf/) back in June of 2011, when I was trying to save Html data to a PDF and copy the PDF data to an email as an attachment. I had always wanted to make the code better and was finally able to. The post of mine generates a bunch of traffic to my blog to this day, by an order of 10 fold to the next top page and is still a very popular problem that people are working on.
 
 ## Usage
 
