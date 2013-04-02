@@ -85,6 +85,9 @@ Initializes BNHtmlPdfKit with a BNPageSize.
 */
 - (id)initWithPageSize:(BNPageSize)pageSize;
 
+/**
+The size of the paper to print on. 
+*/
 - (CGRect)pageSizeRect;
 
 @end;
