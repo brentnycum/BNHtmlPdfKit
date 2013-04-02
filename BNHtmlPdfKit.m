@@ -62,6 +62,10 @@
 - (id)initWithPageSize:(BNPageSize)pageSize {
 	if (self = [super init]) {
 		_pageSize = pageSize;
+        
+        // Default 1/4" margins
+        _topAndBottomMarginSize = 0.25f * 72.0f;
+        _leftAndRightMarginSize = 0.25f * 72.0f;
 	}
 	return self;
 }
@@ -70,6 +74,10 @@
     if (self = [super init]) {
         _pageSize = BNPageSizeCustom;
         _customPageSize = pageSize;
+        
+        // Default 1/4" margins
+        _topAndBottomMarginSize = 0.25f * 72.0f;
+        _leftAndRightMarginSize = 0.25f * 72.0f;
     }
     return self;
 }
