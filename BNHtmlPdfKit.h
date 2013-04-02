@@ -86,6 +86,15 @@ Initializes BNHtmlPdfKit with a BNPageSize.
 - (id)initWithPageSize:(BNPageSize)pageSize;
 
 /**
+ Initializes BNHtmlPdfKit with a custom page size.
+ 
+ @param pageSize The page size the output should be at.
+ 
+ @return An initialized `BNHtmlPdfKit` object.
+ */
+- (id)initWithCustomPageSize:(CGRect)pageSize;
+
+/**
 The size of the paper to print on. 
 */
 - (CGRect)pageSizeRect;

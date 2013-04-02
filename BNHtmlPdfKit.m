@@ -30,6 +30,14 @@
 	return self;
 }
 
+- (id)initWithCustomPageSize:(CGRect)pageSize {
+    if (self = [super init]) {
+        _pageSize = BNPageSizeCustom;
+        _customPageSize = pageSize;
+    }
+    return self;
+}
+
 #pragma mark - Methods
 
 - (CGRect)pageSizeRect {
