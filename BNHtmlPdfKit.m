@@ -10,6 +10,37 @@
 #define PPI 72
 #define BNRectMakeWithPPI(width, height) CGRectMake(0, 0, width * PPI, height * PPI)
 
+
+#pragma mark - BNHtmlPdfKitPageRenderer Interface
+
+@interface BNHtmlPdfKitPageRenderer : UIPrintPageRenderer
+
+@property (nonatomic, assign) CGFloat topAndBottomMarginSize;
+@property (nonatomic, assign) CGFloat leftAndRightMarginSize;
+
+@end
+
+
+#pragma mark - BNHtmlPdfKitPageRenderer Implementation
+
+@implementation BNHtmlPdfKitPageRenderer
+
+@synthesize topAndBottomMarginSize = _topAndBottomMarginSize;
+@synthesize leftAndRightMarginSize = _leftAndRightMarginSize;
+
+- (CGRect)paperRect {
+    return UIGraphicsGetPDFContextBounds();
+}
+
+- (CGRect)printableRect {
+    return CGRectInset([self paperRect], _leftAndRightMarginSize, _topAndBottomMarginSize);
+}
+
+@end
+
+
+#pragma mark - BNHtmlPdfKit Implementation
+
 @interface BNHtmlPdfKit () <UIWebViewDelegate> {
     NSString *_outputFile;
 }
