@@ -51,7 +51,7 @@
 		case BNPageSizeGovernmentLetter:
 			return BNRectMakeWithPPI(8.0f, 10.5f);
 		case BNPageSizeLegal:
-			return BNRectMakeWithPPI(8.5f, 14f);
+			return BNRectMakeWithPPI(8.5f, 14.0f);
 		case BNPageSizeJuniorLegal:
 			return BNRectMakeWithPPI(8.5f, 5.0f);
 		case BNPageSizeLedger:
