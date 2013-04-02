@@ -20,6 +20,7 @@
 
 @synthesize pageSize = _pageSize;
 @synthesize customPageSize = _customPageSize;
+@synthesize delegate = _delegate;
 
 #pragma mark - Initializers
 

@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol BNHtmlPdfKitDelegate;
+
 // http://en.wikipedia.org/wiki/Paper_size
 typedef enum {
 	BNPageSizeLetter,
@@ -77,6 +79,13 @@ Custom page size.
 @property (nonatomic, assign) CGRect customPageSize;
 
 /**
+ The receiver's `delegate`.
+ 
+ The `delegate` is sent messages when content is loading.
+ */
+@property (nonatomic, assign) id<BNHtmlPdfKitDelegate> delegate;
+
+/**
 Initializes BNHtmlPdfKit with a BNPageSize.
 
 @param pageSize The page size the output should be at.
@@ -98,5 +107,17 @@ Initializes BNHtmlPdfKit with a BNPageSize.
 The size of the paper to print on. 
 */
 - (CGRect)pageSizeRect;
+
+@end;
+
+
+/**
+ The `BNHtmlPdfKitDelegate` protocol defines methods that a delegate of a `BNHtmlPdfKit` object that provides feedback
+ based on the operations being performed.
+ 
+ @warning **Important:** Before releasing an instance of `SSWebView` set the `BNHtmlPdfKit` delegate property to `nil` 
+ before disposing of the `BNHtmlPdfKit` instance. This can be done in the `dealloc` method.
+ */
+@protocol BNHtmlPdfKitDelegate <NSObject>
 
 @end;
