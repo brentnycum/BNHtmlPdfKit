@@ -76,7 +76,7 @@ The paper size of the generated PDF.
 /**
 Custom page size.
 */
-@property (nonatomic, assign) CGRect customPageSize;
+@property (nonatomic, assign) CGSize customPageSize;
 
 /**
 Top and Bottom page margins.
@@ -90,7 +90,7 @@ Left and Right page margins.
 
 /**
  The receiver's `delegate`.
- 
+
  The `delegate` is sent messages when content is loading.
  */
 @property (nonatomic, assign) id<BNHtmlPdfKitDelegate> delegate;
@@ -106,17 +106,17 @@ Initializes BNHtmlPdfKit with a BNPageSize.
 
 /**
 Initializes BNHtmlPdfKit with a custom page size.
- 
+
 @param pageSize The page size the output should be at.
- 
+
 @return An initialized `BNHtmlPdfKit` object.
 */
-- (id)initWithCustomPageSize:(CGRect)pageSize;
+- (id)initWithCustomPageSize:(CGSize)pageSize;
 
 /**
-The size of the paper to print on. 
+The size of the paper to print on.
 */
-- (CGRect)pageSizeRect;
+- (CGSize)actualPageSize;
 
 /**
 Saves an html string to PDF data.
@@ -128,14 +128,14 @@ Saves an html string to PDF data.
 
 /**
 Saves an html string to a PDF file.
- 
+
 @param html The HTML to save as a pdf file.
 */
 - (void)saveHtmlAsPdf:(NSString *)html toFile:(NSString *)file;
 
 /**
 Saves an html string to PDF data.
- 
+
 @param url The URL to save as a pdf.
 */
 - (void)saveUrlAsPdf:(NSURL *)url;
@@ -143,7 +143,7 @@ Saves an html string to PDF data.
 
 /**
 Saves an html string to a PDF file.
- 
+
 @param url The URL to save as a pdf file.
 */
 - (void)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)file;
@@ -154,7 +154,7 @@ Saves an html string to a PDF file.
 /**
 The `BNHtmlPdfKitDelegate` protocol defines methods that a delegate of a `BNHtmlPdfKit` object that provides feedback
 based on the operations being performed.
- 
+
 @warning **Important:** Before releasing an instance of `SSWebView` set the `BNHtmlPdfKit` delegate property to `nil`
 before disposing of the `BNHtmlPdfKit` instance. This can be done in the `dealloc` method.
 */
@@ -164,7 +164,7 @@ before disposing of the `BNHtmlPdfKit` instance. This can be done in the `deallo
 
 /**
 Sent when pdf data has been generated.
- 
+
 @param htmlPdfKit The `BNHtmlPdfKit` that data is being saved from.
 @param data The PDF data that was created from HTML/URL.
 */
@@ -172,7 +172,7 @@ Sent when pdf data has been generated.
 
 /**
 Sent when pdf data has been generated.
- 
+
 @param htmlPdfKit The `BNHtmlPdfKit` that data is being saved from.
 @param data The PDF data that was created from HTML/URL.
 */
@@ -180,7 +180,7 @@ Sent when pdf data has been generated.
 
 /**
 Sent when there was an error trying to generate the PDF.
- 
+
 @param htmlPdfKit The `BNHtmlPdfKit` that theerror generated from.
 */
 - (void)htmlPdfKit:(BNHtmlPdfKit *)htmlPdfKit didFailWithError:(NSError *)error;

@@ -25,7 +25,7 @@ This all started with a [post of mine](http://itsbrent.net/2011/06/printing-conv
 ```objective-c
 - (id)init;
 - (id)initWithPageSize:(BNPageSize)pageSize;
-- (id)initWithCustomPageSize:(CGRect)pageSize;
+- (id)initWithCustomPageSize:(CGSize)pageSize;
 ```
 
 Default initializer has default page size of letter and 1/4" margins.
@@ -130,7 +130,7 @@ BNHtmlPdfKit has support for many of the top [paper sizes](http://en.wikipedia.o
 BNHtmlPdfKit also supports custom page sizes by using the `customPageSize` property. Specify your page size in inches * 72.0f.
 
 ```objective-c
-htmlPdfKit.customPageSize = CGRectMake(0, 0, 8.5f * 72.0f, 11.0f * 72.0f);
+htmlPdfKit.customPageSize = CGSizeMake(8.5f * 72.0f, 11.0f * 72.0f);
 ```
 
 ### Margin Sizes
