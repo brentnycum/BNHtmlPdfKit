@@ -106,7 +106,7 @@
 - (void)saveHtmlAsPdf:(NSString *)html toFile:(NSString *)file {
 	_outputFile = file;
 
-	UIWebView *webView = [[[UIWebView alloc] init] autorelease];
+	UIWebView *webView = [[UIWebView alloc] init];
 	webView.delegate = self;
 	[webView loadHTMLString:html baseURL:[NSURL URLWithString:@"http://localhost"]];
 }
@@ -128,7 +128,7 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
 	UIPrintFormatter *formatter = webView.viewPrintFormatter;
 
-	BNHtmlPdfKitPageRenderer *renderer = [[[BNHtmlPdfKitPageRenderer alloc] init] autorelease];
+	BNHtmlPdfKitPageRenderer *renderer = [[BNHtmlPdfKitPageRenderer alloc] init];
 	renderer.topAndBottomMarginSize = _topAndBottomMarginSize;
 	renderer.leftAndRightMarginSize = _leftAndRightMarginSize;
 
