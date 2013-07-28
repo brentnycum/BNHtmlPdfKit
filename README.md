@@ -20,6 +20,26 @@ This all started with a [post of mine](http://itsbrent.net/2011/06/printing-conv
 
 ## Usage
 
+Be sure to retain a reference to the `BNHtmlPdfKit` object outside the scope of the calling method. Otherwise, no delegate methods will be called:
+
+```objective-c
+@interface MyCoolViewController ()
+{
+    BNHtmlPdfKit *_htmlPdfKit;
+}
+
+- (void) createPdf:(id)sender {
+    _htmlPdfKit = [[BNHtmlPdfKit alloc] init];
+    _htmlPdfKit.delegate = self;
+    [_htmlPdfKit saveUrlAsPdf:[NSURL URLWithString:@"http://itsbrent.net/index.html"]];
+}
+
+@end
+
+// Delegate methods go here...
+
+```
+
 ### Initializers
 
 ```objective-c
