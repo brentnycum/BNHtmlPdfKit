@@ -43,6 +43,7 @@
 
 @interface BNHtmlPdfKit () <UIWebViewDelegate> {
 	NSString *_outputFile;
+    UIWebView *_webView;
 }
 - (CGSize)_sizeFromPageSize:(BNPageSize)pageSize;
 @end
@@ -106,9 +107,9 @@
 - (void)saveHtmlAsPdf:(NSString *)html toFile:(NSString *)file {
 	_outputFile = file;
 
-	UIWebView *webView = [[UIWebView alloc] init];
-	webView.delegate = self;
-	[webView loadHTMLString:html baseURL:[NSURL URLWithString:@"http://localhost"]];
+	_webView = [[UIWebView alloc] init];
+	_webView.delegate = self;
+	[_webView loadHTMLString:html baseURL:[NSURL URLWithString:@"http://localhost"]];
 }
 
 - (void)saveUrlAsPdf:(NSURL *)url {
@@ -118,9 +119,9 @@
 - (void)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)file {
 	_outputFile = file;
 
-	UIWebView *webView = [[UIWebView alloc] init];
-	webView.delegate = self;
-	[webView loadRequest:[NSURLRequest requestWithURL:url]];
+	_webView = [[UIWebView alloc] init];
+	_webView.delegate = self;
+	[_webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 #pragma mark - UIWebViewDelegate
@@ -163,12 +164,16 @@
 			[_delegate htmlPdfKit:self didSavePdfFile:_outputFile];
 		}
 	}
+
+	_webView = nil;
 }
 
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
 	if ([_delegate respondsToSelector:@selector(htmlPdfKit:didFailWithError:)]) {
 		[_delegate htmlPdfKit:self didFailWithError:error];
 	}
+
+	_webView = nil;
 }
 
 #pragma mark - Private Methods
