@@ -23,8 +23,7 @@ This all started with a [post of mine](http://itsbrent.net/2011/06/printing-conv
 Be sure to retain a reference to the `BNHtmlPdfKit` object outside the scope of the calling method. Otherwise, no delegate methods will be called:
 
 ```objective-c
-@interface MyCoolViewController ()
-{
+@interface MyCoolViewController () {
     BNHtmlPdfKit *_htmlPdfKit;
 }
 
@@ -171,3 +170,8 @@ htmlPdfKit.leftAndRightMarginSize = 0.25f * 72.0f;
 
  * [http://itsbrent.net](http://itsbrent.net)
  * [@BrentNycum](http://twitter.com/brentnycum)
+
+## Thanks
+
+ * [Brent Anderson](https://github.com/brentjanderson) for commit [6767874ecd](https://github.com/brentnycum/BNHtmlPdfKit/commit/6767874ecd381f1659aaed57a40531b757385e43).
+  * [Pierre Bernard](https://github.com/gloubibou) who also has his own fork [gloubibou/BNHtmlPdfKit](https://github.com/gloubibou/BNHtmlPdfKit).
