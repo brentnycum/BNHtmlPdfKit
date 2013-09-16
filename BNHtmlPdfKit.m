@@ -61,14 +61,14 @@
 #pragma mark - Initializers
 
 - (id)init {
-    if (self = [super init]) {
-        _pageSize = BNPageSizeLetter;
+	if (self = [super init]) {
+		_pageSize = BNPageSizeLetter;
 
 		// Default 1/4" margins
 		_topAndBottomMarginSize = 0.25f * 72.0f;
 		_leftAndRightMarginSize = 0.25f * 72.0f;
-    }
-    return self;
+	}
+	return self;
 }
 
 - (id)initWithPageSize:(BNPageSize)pageSize {
@@ -137,8 +137,8 @@
 
 	NSMutableData *currentReportData = [NSMutableData data];
 
-    CGSize pageSize = [self actualPageSize];
-    CGRect pageRect = CGRectMake(0, 0, pageSize.width, pageSize.height);
+	CGSize pageSize = [self actualPageSize];
+	CGRect pageRect = CGRectMake(0, 0, pageSize.width, pageSize.height);
 
 	UIGraphicsBeginPDFContextToData(currentReportData, pageRect, nil);
 
