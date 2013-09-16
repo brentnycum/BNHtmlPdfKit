@@ -144,9 +144,9 @@
 
 	[renderer prepareForDrawingPages:NSMakeRange(0, 1)];
 
-	int pages = [renderer numberOfPages];
+	NSInteger pages = [renderer numberOfPages];
 
-	for (int i = 0; i < pages; i++) {
+	for (NSInteger i = 0; i < pages; i++) {
 		UIGraphicsBeginPDFPage();
 		[renderer drawPageAtIndex:i inRect:renderer.paperRect];
 	}
