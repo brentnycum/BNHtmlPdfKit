@@ -7,5 +7,6 @@ Pod::Spec.new do |s|
   s.author       = { 'Brent Nycum' => 'brentnycum@gmail.com' }
   s.source       = { :git => 'https://github.com/brentnycum/BNHtmlPdfKit.git', :tag => '0.1.2' }
   s.source_files = 'BNHtmlPdfKit.{h,m}'
+  s.requires_arc = true
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
 end
