@@ -105,7 +105,11 @@
 
 	self.webView = webView;
 
-	[self.webView loadHTMLString:html baseURL:[NSURL URLWithString:@"http://localhost"]];
+	if (!self.baseUrl) {
+		[self.webView loadHTMLString:html baseURL:[NSURL URLWithString:@"http://localhost"]];
+	} else {
+		[self.webView loadHTMLString:html baseURL:self.baseUrl];
+	}
 }
 
 - (void)saveUrlAsPdf:(NSURL *)url {

@@ -89,6 +89,11 @@ Left and Right page margins.
 @property (nonatomic, assign) CGFloat leftAndRightMarginSize;
 
 /**
+Base URL to use.
+*/
+@property (nonatomic, retain) NSURL *baseUrl;
+
+/**
  The receiver's `delegate`.
 
  The `delegate` is sent messages when content is loading.
