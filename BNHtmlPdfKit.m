@@ -25,71 +25,64 @@
 
 @implementation BNHtmlPdfKitPageRenderer
 
-@synthesize topAndBottomMarginSize = _topAndBottomMarginSize;
-@synthesize leftAndRightMarginSize = _leftAndRightMarginSize;
-
 - (CGRect)paperRect {
 	return UIGraphicsGetPDFContextBounds();
 }
 
 - (CGRect)printableRect {
-	return CGRectInset([self paperRect], _leftAndRightMarginSize, _topAndBottomMarginSize);
+	return CGRectInset([self paperRect], self.leftAndRightMarginSize, self.topAndBottomMarginSize);
 }
 
 @end
 
+
+#pragma mark - BNHtmlPdfKit Extension
+
+@interface BNHtmlPdfKit () <UIWebViewDelegate>
+
+- (CGSize)_sizeFromPageSize:(BNPageSize)pageSize;
+
+@property (nonatomic, copy) NSString *outputFile;
+@property (nonatomic, strong) UIWebView *webView;
+
+@end
 
 #pragma mark - BNHtmlPdfKit Implementation
 
-@interface BNHtmlPdfKit () <UIWebViewDelegate> {
-	NSString *_outputFile;
-    UIWebView *_webView;
-}
-- (CGSize)_sizeFromPageSize:(BNPageSize)pageSize;
-@end
-
 @implementation BNHtmlPdfKit
-
-#pragma mark - Accessors
-
-@synthesize pageSize = _pageSize;
-@synthesize customPageSize = _customPageSize;
-@synthesize topAndBottomMarginSize = _topAndBottomMarginSize;
-@synthesize leftAndRightMarginSize = _leftAndRightMarginSize;
-@synthesize delegate = _delegate;
 
 #pragma mark - Initializers
 
 - (id)init {
 	if (self = [super init]) {
-		_pageSize = BNPageSizeLetter;
+		self.pageSize = BNPageSizeLetter;
 
 		// Default 1/4" margins
-		_topAndBottomMarginSize = 0.25f * 72.0f;
-		_leftAndRightMarginSize = 0.25f * 72.0f;
+		self.topAndBottomMarginSize = 0.25f * 72.0f;
+		self.leftAndRightMarginSize = 0.25f * 72.0f;
 	}
 	return self;
 }
 
 - (id)initWithPageSize:(BNPageSize)pageSize {
 	if (self = [super init]) {
-		_pageSize = pageSize;
+		self.pageSize = pageSize;
 
 		// Default 1/4" margins
-		_topAndBottomMarginSize = 0.25f * 72.0f;
-		_leftAndRightMarginSize = 0.25f * 72.0f;
+		self.topAndBottomMarginSize = 0.25f * 72.0f;
+		self.leftAndRightMarginSize = 0.25f * 72.0f;
 	}
 	return self;
 }
 
 - (id)initWithCustomPageSize:(CGSize)pageSize {
 	if (self = [super init]) {
-		_pageSize = BNPageSizeCustom;
-		_customPageSize = pageSize;
+		self.pageSize = BNPageSizeCustom;
+		self.customPageSize = pageSize;
 
 		// Default 1/4" margins
-		_topAndBottomMarginSize = 0.25f * 72.0f;
-		_leftAndRightMarginSize = 0.25f * 72.0f;
+		self.topAndBottomMarginSize = 0.25f * 72.0f;
+		self.leftAndRightMarginSize = 0.25f * 72.0f;
 	}
 	return self;
 }
@@ -97,7 +90,7 @@
 #pragma mark - Methods
 
 - (CGSize)actualPageSize {
-	return [self _sizeFromPageSize:_pageSize];
+	return [self _sizeFromPageSize:self.pageSize];
 }
 
 - (void)saveHtmlAsPdf:(NSString *)html {
@@ -105,11 +98,14 @@
 }
 
 - (void)saveHtmlAsPdf:(NSString *)html toFile:(NSString *)file {
-	_outputFile = file;
+	self.outputFile = file;
 
-	_webView = [[UIWebView alloc] init];
-	_webView.delegate = self;
-	[_webView loadHTMLString:html baseURL:[NSURL URLWithString:@"http://localhost"]];
+	UIWebView *webView= [[UIWebView alloc] init];
+	webView.delegate = self;
+
+	self.webView = webView;
+
+	[self.webView loadHTMLString:html baseURL:[NSURL URLWithString:@"http://localhost"]];
 }
 
 - (void)saveUrlAsPdf:(NSURL *)url {
@@ -117,11 +113,14 @@
 }
 
 - (void)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)file {
-	_outputFile = file;
+	self.outputFile = file;
 
-	_webView = [[UIWebView alloc] init];
-	_webView.delegate = self;
-	[_webView loadRequest:[NSURLRequest requestWithURL:url]];
+	UIWebView *webView = [[UIWebView alloc] init];
+	webView.delegate = self;
+
+	self.webView = webView;
+
+	[self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 #pragma mark - UIWebViewDelegate
@@ -137,8 +136,8 @@
 	UIPrintFormatter *formatter = webView.viewPrintFormatter;
 
 	BNHtmlPdfKitPageRenderer *renderer = [[BNHtmlPdfKitPageRenderer alloc] init];
-	renderer.topAndBottomMarginSize = _topAndBottomMarginSize;
-	renderer.leftAndRightMarginSize = _leftAndRightMarginSize;
+	renderer.topAndBottomMarginSize = self.topAndBottomMarginSize;
+	renderer.leftAndRightMarginSize = self.leftAndRightMarginSize;
 
 	[renderer addPrintFormatter:formatter startingAtPageAtIndex:0];
 
@@ -160,27 +159,27 @@
 
 	UIGraphicsEndPDFContext();
 
-	if ([_delegate respondsToSelector:@selector(htmlPdfKit:didSavePdfData:)]) {
-		[_delegate htmlPdfKit:self didSavePdfData:currentReportData];
+	if ([self.delegate respondsToSelector:@selector(htmlPdfKit:didSavePdfData:)]) {
+		[self.delegate htmlPdfKit:self didSavePdfData:currentReportData];
 	}
 
-	if (_outputFile) {
-		[currentReportData writeToFile:_outputFile atomically:YES];
+	if (self.outputFile) {
+		[currentReportData writeToFile:self.outputFile atomically:YES];
 
-		if ([_delegate respondsToSelector:@selector(htmlPdfKit:didSavePdfFile:)]) {
-			[_delegate htmlPdfKit:self didSavePdfFile:_outputFile];
+		if ([self.delegate respondsToSelector:@selector(htmlPdfKit:didSavePdfFile:)]) {
+			[self.delegate htmlPdfKit:self didSavePdfFile:self.outputFile];
 		}
 	}
 
-	_webView = nil;
+	self.webView = nil;
 }
 
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-	if ([_delegate respondsToSelector:@selector(htmlPdfKit:didFailWithError:)]) {
-		[_delegate htmlPdfKit:self didFailWithError:error];
+	if ([self.delegate respondsToSelector:@selector(htmlPdfKit:didFailWithError:)]) {
+		[self.delegate htmlPdfKit:self didFailWithError:error];
 	}
 
-	_webView = nil;
+	self.webView = nil;
 }
 
 #pragma mark - Private Methods
@@ -292,7 +291,7 @@
 		case BNPageSizeJapaneseB12:
 			return BNSizeMakeWithPPI(0.63f, 0.87f);
 		case BNPageSizeCustom:
-			return _customPageSize;
+			return self.customPageSize;
 	}
 	return CGSizeZero;
 }
