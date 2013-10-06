@@ -127,6 +127,13 @@
 #pragma mark - UIWebViewDelegate
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
+
+	// In iOS 7 this delegate method gets called multiple times.
+	// Remove delegate once being called.
+	// Found by Laurent Denoue
+	// https://twitter.com/ldenoue/status/381067564886941696
+	webView.delegate = nil;
+
 	UIPrintFormatter *formatter = webView.viewPrintFormatter;
 
 	BNHtmlPdfKitPageRenderer *renderer = [[BNHtmlPdfKitPageRenderer alloc] init];
