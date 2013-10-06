@@ -130,6 +130,7 @@ Saves an html string to PDF data.
 Saves an html string to a PDF file.
 
 @param html The HTML to save as a pdf file.
+@param file The filename of the pdf file to save.
 */
 - (void)saveHtmlAsPdf:(NSString *)html toFile:(NSString *)file;
 
@@ -145,14 +146,15 @@ Saves an html string to PDF data.
 Saves an html string to a PDF file.
 
 @param url The URL to save as a pdf file.
+@param file The filename of the pdf file to save.
 */
 - (void)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)file;
 
 /**
 Determine the preferred paper size for general printing. From Pierre Bernard.
 
- @return paper size (currently: A4 or Letter).
- */
+@return paper size (currently: A4 or Letter).
+*/
 + (BNPageSize)defaultPageSize;
 
 @end;
@@ -161,9 +163,6 @@ Determine the preferred paper size for general printing. From Pierre Bernard.
 /**
 The `BNHtmlPdfKitDelegate` protocol defines methods that a delegate of a `BNHtmlPdfKit` object that provides feedback
 based on the operations being performed.
-
-@warning **Important:** Before releasing an instance of `SSWebView` set the `BNHtmlPdfKit` delegate property to `nil`
-before disposing of the `BNHtmlPdfKit` instance. This can be done in the `dealloc` method.
 */
 @protocol BNHtmlPdfKitDelegate <NSObject>
 
