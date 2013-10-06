@@ -47,9 +47,9 @@ Be sure to retain a reference to the `BNHtmlPdfKit` object outside the scope of 
 - (id)initWithCustomPageSize:(CGSize)pageSize;
 ```
 
-Default initializer has default page size of letter and 1/4" margins.
+Default initializer has default page size based on locale (thanks Pierre Bernard) and 1/4" margins.
 
-### Saving a URL 
+### Saving a URL
 
 ```objective-c
 BNHtmlPdfKit *htmlPdfKit = [[BNHtmlPdfKit alloc] init];
@@ -63,7 +63,7 @@ To just save PDF data.
 [htmlPdfKit saveUrlAsPdf:[NSURL URLWithString:@"http://itsbrent.net"]];
 ```
 
-### Saving an HTML String 
+### Saving an HTML String
 
 ```objective-c
 BNHtmlPdfKit *htmlPdfKit = [[BNHtmlPdfKit alloc] init];
