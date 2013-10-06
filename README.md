@@ -175,3 +175,4 @@ htmlPdfKit.leftAndRightMarginSize = 0.25f * 72.0f;
 
  * [Brent Anderson](https://github.com/brentjanderson) for commit [6767874ecd](https://github.com/brentnycum/BNHtmlPdfKit/commit/6767874ecd381f1659aaed57a40531b757385e43).
  * [Pierre Bernard](https://github.com/gloubibou) who also has his own fork [gloubibou/BNHtmlPdfKit](https://github.com/gloubibou/BNHtmlPdfKit).
+ * [Laurent Denoue](https://twitter.com/ldenoue) for finding [this bug](https://github.com/brentnycum/BNHtmlPdfKit/commit/77b5d51ae3f297bc69f52a9ec7b1db3e19b19786).
