@@ -55,7 +55,7 @@
 
 - (id)init {
 	if (self = [super init]) {
-		self.pageSize = BNPageSizeLetter;
+		self.pageSize = [BNHtmlPdfKit defaultPageSize];
 
 		// Default 1/4" margins
 		self.topAndBottomMarginSize = 0.25f * 72.0f;
@@ -294,6 +294,14 @@
 			return self.customPageSize;
 	}
 	return CGSizeZero;
+}
+
++ (BNPageSize)defaultPageSize {
+	NSLocale *locale = [NSLocale currentLocale];
+	BOOL useMetric = [[locale objectForKey:NSLocaleUsesMetricSystem] boolValue];
+	BNPageSize pageSize = (useMetric ? BNPageSizeA4 : BNPageSizeLetter);
+
+	return pageSize;
 }
 
 @end

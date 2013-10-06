@@ -148,6 +148,13 @@ Saves an html string to a PDF file.
 */
 - (void)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)file;
 
+/**
+Determine the preferred paper size for general printing. From Pierre Bernard.
+
+ @return paper size (currently: A4 or Letter).
+ */
++ (BNPageSize)defaultPageSize;
+
 @end;
 
 
