@@ -211,7 +211,7 @@
 		case BNPageSizeA3:
 			return BNSizeMakeWithPPI(11.69f, 16.54f);
 		case BNPageSizeA4:
-			return BNSizeMakeWithPPI(8.27f, 11.69f);
+			return BNSizeMakeWithPPI(8.26666667, 11.6916667);
 		case BNPageSizeA5:
 			return BNSizeMakeWithPPI(5.83f, 8.27f);
 		case BNPageSizeA6:
