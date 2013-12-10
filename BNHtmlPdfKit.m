@@ -127,6 +127,18 @@
 	[self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
+- (void)saveWebViewAsPdf:(UIWebView *)webView {
+    [self saveWebViewAsPdf:webView toFile:nil];
+}
+
+- (void)saveWebViewAsPdf:(UIWebView *)webView toFile:(NSString *)file {
+	self.outputFile = file;
+
+    webView.delegate = self;
+    
+    self.webView = webView;
+}
+
 #pragma mark - UIWebViewDelegate
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
