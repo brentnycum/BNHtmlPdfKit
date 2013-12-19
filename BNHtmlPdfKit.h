@@ -160,7 +160,7 @@ Saves an webView to PDF data.
 
 @param webView The webView to save as a pdf.
 */
-- (void)saveWebViewAsPdf:(NSString *)html;
+- (void)saveWebViewAsPdf:(UIWebView *)webView;
 
 /**
 Saves webView content to a PDF file.
