@@ -127,6 +127,18 @@
 	[self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
+- (void)saveWebViewAsPdf:(UIWebView *)webView {
+    [self saveWebViewAsPdf:webView toFile:nil];
+}
+
+- (void)saveWebViewAsPdf:(UIWebView *)webView toFile:(NSString *)file {
+	self.outputFile = file;
+
+    webView.delegate = self;
+    
+    self.webView = webView;
+}
+
 #pragma mark - UIWebViewDelegate
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -211,7 +223,7 @@
 		case BNPageSizeA3:
 			return BNSizeMakeWithPPI(11.69f, 16.54f);
 		case BNPageSizeA4:
-			return BNSizeMakeWithPPI(8.27f, 11.69f);
+			return BNSizeMakeWithPPI(8.26666667, 11.6916667);
 		case BNPageSizeA5:
 			return BNSizeMakeWithPPI(5.83f, 8.27f);
 		case BNPageSizeA6:
