@@ -42,6 +42,9 @@
 
 - (CGSize)_sizeFromPageSize:(BNPageSize)pageSize;
 
+- (void)_timeout;
+- (void)_savePdf;
+
 @property (nonatomic, copy) NSString *outputFile;
 @property (nonatomic, strong) UIWebView *webView;
 
@@ -87,6 +90,13 @@
 	return self;
 }
 
+- (void)dealloc {
+	[[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(_timeout) object:nil];
+
+	[self.webView setDelegate:nil];
+	[self.webView stopLoading];
+}
+
 #pragma mark - Methods
 
 - (CGSize)actualPageSize {
@@ -100,10 +110,8 @@
 - (void)saveHtmlAsPdf:(NSString *)html toFile:(NSString *)file {
 	self.outputFile = file;
 
-	UIWebView *webView= [[UIWebView alloc] init];
-	webView.delegate = self;
-
-	self.webView = webView;
+	self.webView = [[UIWebView alloc] init];
+	self.webView.delegate = self;
 
 	if (!self.baseUrl) {
 		[self.webView loadHTMLString:html baseURL:[NSURL URLWithString:@"http://localhost"]];
@@ -119,37 +127,63 @@
 - (void)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)file {
 	self.outputFile = file;
 
-	UIWebView *webView = [[UIWebView alloc] init];
-	webView.delegate = self;
+	self.webView = [[UIWebView alloc] init];
+	self.webView.delegate = self;
 
-	self.webView = webView;
+	if ([self.webView respondsToSelector:@selector(setSuppressesIncrementalRendering:)]) {
+		self.webView setSuppressesIncrementalRendering:YES];
+	}
 
 	[self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 - (void)saveWebViewAsPdf:(UIWebView *)webView {
-    [self saveWebViewAsPdf:webView toFile:nil];
+	[self saveWebViewAsPdf:webView toFile:nil];
 }
 
 - (void)saveWebViewAsPdf:(UIWebView *)webView toFile:(NSString *)file {
+	[[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(_timeout) object:nil];
+
 	self.outputFile = file;
 
-    webView.delegate = self;
-    
-    self.webView = webView;
+	webView.delegate = self;
+
+	self.webView = webView;
 }
 
 #pragma mark - UIWebViewDelegate
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
+	NSString *readyState = [webView stringByEvaluatingJavaScriptFromString:@"document.readyState"];
+	BOOL complete = [readyState isEqualToString:@"complete"];
 
-	// In iOS 7 this delegate method gets called multiple times.
-	// Remove delegate once being called.
-	// Found by Laurent Denoue
-	// https://twitter.com/ldenoue/status/381067564886941696
-	webView.delegate = nil;
+	[[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(_timeout) object:nil];
 
-	UIPrintFormatter *formatter = webView.viewPrintFormatter;
+	if (complete) {
+		[self _savePdf];
+	} else {
+		[self performSelector:@selector(_timeout) withObject:nil afterDelay:1.0f];
+	}
+}
+
+-(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    [[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(_timeout) object:nil];
+
+	if ([self.delegate respondsToSelector:@selector(htmlPdfKit:didFailWithError:)]) {
+		[self.delegate htmlPdfKit:self didFailWithError:error];
+	}
+
+	self.webView = nil;
+}
+
+#pragma mark - Private Methods
+
+- (void)_timeout {
+	[self _savePdf];
+}
+
+- (void)_savePdf {
+	UIPrintFormatter *formatter = self.webView.viewPrintFormatter;
 
 	BNHtmlPdfKitPageRenderer *renderer = [[BNHtmlPdfKitPageRenderer alloc] init];
 	renderer.topAndBottomMarginSize = self.topAndBottomMarginSize;
@@ -189,16 +223,6 @@
 
 	self.webView = nil;
 }
-
--(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-	if ([self.delegate respondsToSelector:@selector(htmlPdfKit:didFailWithError:)]) {
-		[self.delegate htmlPdfKit:self didFailWithError:error];
-	}
-
-	self.webView = nil;
-}
-
-#pragma mark - Private Methods
 
 - (CGSize)_sizeFromPageSize:(BNPageSize)pageSize {
 	switch (pageSize) {
