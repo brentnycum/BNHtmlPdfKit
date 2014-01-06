@@ -131,7 +131,7 @@
 	self.webView.delegate = self;
 
 	if ([self.webView respondsToSelector:@selector(setSuppressesIncrementalRendering:)]) {
-		self.webView setSuppressesIncrementalRendering:YES];
+		[self.webView setSuppressesIncrementalRendering:YES];
 	}
 
 	[self.webView loadRequest:[NSURLRequest requestWithURL:url]];
