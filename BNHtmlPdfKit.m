@@ -110,8 +110,6 @@
 
 	[self.webView setDelegate:nil];
 	[self.webView stopLoading];
-
-	[super dealloc];
 }
 
 #pragma mark - Methods
