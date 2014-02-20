@@ -59,6 +59,7 @@
 - (id)init {
 	if (self = [super init]) {
 		self.pageSize = [BNHtmlPdfKit defaultPageSize];
+		self.landscape = NO;
 
 		// Default 1/4" margins
 		self.topAndBottomMarginSize = 0.25f * 72.0f;
@@ -70,6 +71,19 @@
 - (id)initWithPageSize:(BNPageSize)pageSize {
 	if (self = [super init]) {
 		self.pageSize = pageSize;
+		self.landscape = NO;
+
+		// Default 1/4" margins
+		self.topAndBottomMarginSize = 0.25f * 72.0f;
+		self.leftAndRightMarginSize = 0.25f * 72.0f;
+	}
+	return self;
+}
+
+- (id)initWithPageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape {
+	if (self = [super init]) {
+		self.pageSize = pageSize;
+		self.landscape = landscape;
 
 		// Default 1/4" margins
 		self.topAndBottomMarginSize = 0.25f * 72.0f;
@@ -82,6 +96,7 @@
 	if (self = [super init]) {
 		self.pageSize = BNPageSizeCustom;
 		self.customPageSize = pageSize;
+		self.landscape = NO;
 
 		// Default 1/4" margins
 		self.topAndBottomMarginSize = 0.25f * 72.0f;
@@ -95,11 +110,17 @@
 
 	[self.webView setDelegate:nil];
 	[self.webView stopLoading];
+
+	[super dealloc];
 }
 
 #pragma mark - Methods
 
 - (CGSize)actualPageSize {
+	if (self.landscape) {
+		CGSize pageSize = [self _sizeFromPageSize:self.pageSize];
+		return CGSizeMake(pageSize.height, pageSize.width);
+	}
 	return [self _sizeFromPageSize:self.pageSize];
 }
 
@@ -183,6 +204,10 @@
 }
 
 - (void)_savePdf {
+	if (!self.webView) {
+		return;
+	}
+
 	UIPrintFormatter *formatter = self.webView.viewPrintFormatter;
 
 	BNHtmlPdfKitPageRenderer *renderer = [[BNHtmlPdfKitPageRenderer alloc] init];
@@ -345,4 +370,3 @@
 }
 
 @end
-

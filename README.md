@@ -152,6 +152,14 @@ BNHtmlPdfKit also supports custom page sizes by using the `customPageSize` prope
 htmlPdfKit.customPageSize = CGSizeMake(8.5f * 72.0f, 11.0f * 72.0f);
 ```
 
+### Landscape Support
+
+Support for setting a paper size and setting as landscape is available by either using the `landscape` property or by using the custom init method below.
+
+```objective-c
+- (id)initWithPageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape;
+```
+
 ### Margin Sizes
 
 Default margin size is set to 1/4".

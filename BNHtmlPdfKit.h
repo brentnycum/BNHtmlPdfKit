@@ -79,6 +79,11 @@ Custom page size.
 @property (nonatomic, assign) CGSize customPageSize;
 
 /**
+Is page landscape?
+*/
+@property (nonatomic, assign, getter=isLandscape) BOOL landscape;
+
+/**
 Top and Bottom page margins.
 */
 @property (nonatomic, assign) CGFloat topAndBottomMarginSize;
@@ -108,6 +113,16 @@ Initializes BNHtmlPdfKit with a BNPageSize.
 @return An initialized `BNHtmlPdfKit` object.
 */
 - (id)initWithPageSize:(BNPageSize)pageSize;
+
+/**
+Initializes BNHtmlPdfKit with a BNPageSize.
+
+@param pageSize The page size the output should be at.
+@param landscape Should the page be printed in landscape?
+
+@return An initialized `BNHtmlPdfKit` object.
+*/
+- (id)initWithPageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape;
 
 /**
 Initializes BNHtmlPdfKit with a custom page size.
