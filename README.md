@@ -20,6 +20,8 @@ This all started with a [post of mine](http://itsbrent.net/2011/06/printing-conv
 
 ## Usage
 
+You can either use blocks based or delegate based calling.
+
 ### Blocks
 
 There are quite a few block methods provided for convenience.
@@ -56,13 +58,13 @@ To use them simply call:
 
 htmlPdfKit = [BNHtmlPdfKit saveUrlAsPdf:[NSURL URLWithString:@"http://itsbrent.net"] toFile:@"...itsbrent.pdf" pageSize:BNPageSizeA6 success:^(NSString *pdfFileName) {
 
-		NSLog(@"Done");
+	NSLog(@"Done");
 
-	} failure:^(NSError *err) {
+} failure:^(NSError *err) {
 
-		NSLog(@"Failure");
+	NSLog(@"Failure");
 
-	}];
+}];
 
 ```
 
