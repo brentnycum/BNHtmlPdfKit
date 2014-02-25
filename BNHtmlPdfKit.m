@@ -48,11 +48,127 @@
 @property (nonatomic, copy) NSString *outputFile;
 @property (nonatomic, strong) UIWebView *webView;
 
+@property (nonatomic, copy) void (^dataCompletionBlock)(NSData *pdfData);
+@property (nonatomic, copy) void (^fileCompletionBlock)(NSString *pdfFileName);
+@property (nonatomic, copy) void (^failureBlock)(NSError * error);
+
 @end
 
 #pragma mark - BNHtmlPdfKit Implementation
 
 @implementation BNHtmlPdfKit
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure {
+
+	return [BNHtmlPdfKit saveUrlAsPdf:url pageSize:[BNHtmlPdfKit defaultPageSize] isLandscape:NO success:completion failure:failure];
+
+}
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url pageSize:(BNPageSize)pageSize success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure {
+
+	return [BNHtmlPdfKit saveUrlAsPdf:url pageSize:pageSize isLandscape:NO success:completion failure:failure];
+
+}
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url pageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure {
+
+	BNHtmlPdfKit *pdfKit = [[BNHtmlPdfKit alloc] initWithPageSize:pageSize isLandscape:landscape];
+	pdfKit.dataCompletionBlock = completion;
+	pdfKit.failureBlock = failure;
+	[pdfKit saveUrlAsPdf:url toFile:nil];
+	return pdfKit;
+
+}
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url pageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape topAndBottomMarginSize:(CGFloat)topAndBottom leftAndRightMarginSize:(CGFloat)leftAndRight success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure {
+
+	BNHtmlPdfKit *pdfKit = [[BNHtmlPdfKit alloc] initWithPageSize:pageSize isLandscape:landscape];
+	pdfKit.topAndBottomMarginSize = topAndBottom;
+	pdfKit.leftAndRightMarginSize = leftAndRight;
+	pdfKit.dataCompletionBlock = completion;
+	pdfKit.failureBlock = failure;
+	[pdfKit saveUrlAsPdf:url toFile:nil];
+	return pdfKit;
+
+}
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure {
+
+	return [BNHtmlPdfKit saveUrlAsPdf:url toFile:filename pageSize:[BNHtmlPdfKit defaultPageSize] isLandscape:NO success:completion failure:failure];
+
+}
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename pageSize:(BNPageSize)pageSize success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure {
+
+	return [BNHtmlPdfKit saveUrlAsPdf:url toFile:filename pageSize:pageSize isLandscape:NO success:completion failure:failure];
+
+}
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename pageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure {
+
+	BNHtmlPdfKit *pdfKit = [[BNHtmlPdfKit alloc] initWithPageSize:pageSize isLandscape:landscape];
+	pdfKit.fileCompletionBlock = completion;
+	pdfKit.failureBlock = failure;
+	[pdfKit saveUrlAsPdf:url toFile:filename];
+	return pdfKit;
+
+}
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename pageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape topAndBottomMarginSize:(CGFloat)topAndBottom leftAndRightMarginSize:(CGFloat)leftAndRight success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure {
+
+	BNHtmlPdfKit *pdfKit = [[BNHtmlPdfKit alloc] initWithPageSize:pageSize isLandscape:landscape];
+	pdfKit.topAndBottomMarginSize = topAndBottom;
+	pdfKit.leftAndRightMarginSize = leftAndRight;
+	pdfKit.fileCompletionBlock = completion;
+	pdfKit.failureBlock = failure;
+	[pdfKit saveUrlAsPdf:url toFile:filename];
+	return pdfKit;
+
+}
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url customPageSize:(CGSize)pageSize success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure {
+
+	BNHtmlPdfKit *pdfKit = [[BNHtmlPdfKit alloc] initWithCustomPageSize:pageSize];
+	pdfKit.dataCompletionBlock = completion;
+	pdfKit.failureBlock = failure;
+	[pdfKit saveUrlAsPdf:url toFile:nil];
+	return pdfKit;
+
+}
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url customPageSize:(CGSize)pageSize topAndBottomMarginSize:(CGFloat)topAndBottom leftAndRightMarginSize:(CGFloat)leftAndRight success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure {
+
+	BNHtmlPdfKit *pdfKit = [[BNHtmlPdfKit alloc] initWithCustomPageSize:pageSize];
+	pdfKit.topAndBottomMarginSize = topAndBottom;
+	pdfKit.leftAndRightMarginSize = leftAndRight;
+	pdfKit.dataCompletionBlock = completion;
+	pdfKit.failureBlock = failure;
+	[pdfKit saveUrlAsPdf:url toFile:nil];
+	return pdfKit;
+
+}
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename customPageSize:(CGSize)pageSize success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure {
+
+	BNHtmlPdfKit *pdfKit = [[BNHtmlPdfKit alloc] initWithCustomPageSize:pageSize];
+	pdfKit.fileCompletionBlock = completion;
+	pdfKit.failureBlock = failure;
+	[pdfKit saveUrlAsPdf:url toFile:filename];
+	return pdfKit;
+
+}
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename customPageSize:(CGSize)pageSize topAndBottomMarginSize:(CGFloat)topAndBottom leftAndRightMarginSize:(CGFloat)leftAndRight success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure {
+
+	BNHtmlPdfKit *pdfKit = [[BNHtmlPdfKit alloc] initWithCustomPageSize:pageSize];
+	pdfKit.topAndBottomMarginSize = topAndBottom;
+	pdfKit.leftAndRightMarginSize = leftAndRight;
+	pdfKit.fileCompletionBlock = completion;
+	pdfKit.failureBlock = failure;
+	[pdfKit saveUrlAsPdf:url toFile:filename];
+	return pdfKit;
+
+}
 
 #pragma mark - Initializers
 
@@ -299,8 +415,12 @@
 	}
 }
 
--(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    [[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(_timeout) object:nil];
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+	[[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(_timeout) object:nil];
+
+	if (self.failureBlock) {
+		self.failureBlock(error);
+	}
 
 	if ([self.delegate respondsToSelector:@selector(htmlPdfKit:didFailWithError:)]) {
 		[self.delegate htmlPdfKit:self didFailWithError:error];
@@ -345,6 +465,14 @@
 	}
 
 	UIGraphicsEndPDFContext();
+
+	if (self.dataCompletionBlock) {
+		self.dataCompletionBlock(currentReportData);
+	}
+
+	if (self.fileCompletionBlock) {
+		self.fileCompletionBlock(self.outputFile);
+	}
 
 	if ([self.delegate respondsToSelector:@selector(htmlPdfKit:didSavePdfData:)]) {
 		[self.delegate htmlPdfKit:self didSavePdfData:currentReportData];
