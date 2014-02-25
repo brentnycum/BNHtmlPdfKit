@@ -105,28 +105,139 @@ Base URL to use.
  */
 @property (nonatomic, assign) id<BNHtmlPdfKitDelegate> delegate;
 
+/**
+Creates a BNHtmlPdfKit object to save a URL as PDF.
+
+@param url URL to save PDF of.
+@param completion Block to be notified when PDF data is generated.
+@param failure Block to be notified of failure.
+*/
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure;
 
+/**
+Creates a BNHtmlPdfKit object to save a URL as PDF with BNPageSize.
+
+@param url URL to save PDF of.
+@param pageSize BNPageSize of the page to be generated.
+@param completion Block to be notified when PDF data is generated.
+@param failure Block to be notified of failure.
+*/
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url pageSize:(BNPageSize)pageSize success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure;
 
+/**
+Creates a BNHtmlPdfKit object to save a URL as PDF with BNPageSize and if in landscape.
+
+@param url URL to save PDF of.
+@param pageSize BNPageSize of the page to be generated.
+@param landscape Should the page be landscape.
+@param completion Block to be notified when PDF data is generated.
+@param failure Block to be notified of failure.
+*/
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url pageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure;
 
+/**
+Creates a BNHtmlPdfKit object to save a URL as PDF with BNPageSize, landscape orientation, and margin sizes.
+
+@param url URL to save PDF of.
+@param pageSize BNPageSize of the page to be generated.
+@param landscape Should the page be landscape.
+@param topAndBottom Top and bottom margin size.
+@param leftAndRight Left and right margin size.
+@param completion Block to be notified when PDF data is generated.
+@param failure Block to be notified of failure.
+*/
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url pageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape topAndBottomMarginSize:(CGFloat)topAndBottom leftAndRightMarginSize:(CGFloat)leftAndRight success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure;
 
+/**
+Creates a BNHtmlPdfKit object to save a URL as a PDF file.
+
+@param url URL to save PDF of.
+@param completion Block to be notified when PDF file is generated.
+@param failure Block to be notified of failure.
+*/
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure;
 
+/**
+Creates a BNHtmlPdfKit object to save a URL as a PDF file with BNPageSize.
+
+@param url URL to save PDF of.
+@param filename Filename to save file as.
+@param pageSize BNPageSize of the page to be generated.
+@param leftAndRight Left and right margin size.
+@param completion Block to be notified when PDF file is generated.
+@param failure Block to be notified of failure.
+*/
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename pageSize:(BNPageSize)pageSize success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure;
 
+/**
+Creates a BNHtmlPdfKit object to save a URL as a PDF file with BNPageSize, and landscape orientation.
+
+@param url URL to save PDF of.
+@param filename Filename to save file as.
+@param pageSize BNPageSize of the page to be generated.
+@param landscape Should the page be landscape.
+@param completion Block to be notified when PDF file is generated.
+@param failure Block to be notified of failure.
+*/
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename pageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure;
 
+/**
+Creates a BNHtmlPdfKit object to save a URL as a PDF file with BNPageSize, landscape orientation, and margin sizes.
+
+@param url URL to save PDF of.
+@param pageSize BNPageSize of the page to be generated.
+@param landscape Should the page be landscape.
+@param topAndBottom Top and bottom margin size.
+@param leftAndRight Left and right margin size.
+@param completion Block to be notified when PDF file is generated.
+@param failure Block to be notified of failure.
+*/
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename pageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape topAndBottomMarginSize:(CGFloat)topAndBottom leftAndRightMarginSize:(CGFloat)leftAndRight success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure;
 
+/**
+Creates a BNHtmlPdfKit object to save a URL as PDF with custom page size..
+
+@param url URL to save PDF of.
+@param pageSize CGSize of the page to be generated.
+@param completion Block to be notified when PDF file is generated.
+@param failure Block to be notified of failure.
+*/
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url customPageSize:(CGSize)pageSize success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure;
 
+/**
+Creates a BNHtmlPdfKit object to save a URL as PDF with custom page size.
+
+@param url URL to save PDF of.
+@param pageSize CGSize of the page to be generated.
+@param topAndBottom Top and bottom margin size.
+@param leftAndRight Left and right margin size.
+@param completion Block to be notified when PDF data is generated.
+@param failure Block to be notified of failure.
+*/
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url customPageSize:(CGSize)pageSize topAndBottomMarginSize:(CGFloat)topAndBottom leftAndRightMarginSize:(CGFloat)leftAndRight success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure;
 
+/**
+Creates a BNHtmlPdfKit object to save a URL as PDF with custom page size.
+
+@param url URL to save PDF of.
+@param filename Filename to save file as.
+@param pageSize CGSize of the page to be generated.
+@param completion Block to be notified when PDF data is generated.
+@param failure Block to be notified of failure.
+*/
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename customPageSize:(CGSize)pageSize success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure;
 
+/**
+Creates a BNHtmlPdfKit object to save a URL as PDF with BNPageSize.
+
+@param url URL to save PDF of.
+@param filename Filename to save file as.
+@param pageSize CGSize of the page to be generated.
+@param topAndBottom Top and bottom margin size.
+@param leftAndRight Left and right margin size.
+@param completion Block to be notified when PDF file is generated.
+@param failure Block to be notified of failure.
+*/
 + (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename customPageSize:(CGSize)pageSize topAndBottomMarginSize:(CGFloat)topAndBottom leftAndRightMarginSize:(CGFloat)leftAndRight success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure;
 
 
