@@ -220,6 +220,8 @@
 			return BNSizeMakeWithPPI(0.87f, 1.26f);
 		case BNPageSizeJapaneseB12:
 			return BNSizeMakeWithPPI(0.63f, 0.87f);
+		case BNPageSizeCustom:
+			return CGSizeZero;
 	}
 	return CGSizeZero;
 }
