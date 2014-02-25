@@ -134,6 +134,13 @@ Initializes BNHtmlPdfKit with a custom page size.
 - (id)initWithCustomPageSize:(CGSize)pageSize;
 
 /**
+Get a CGSize of what the BNPageSize represents.
+
+@param pageSize Page Size to get the CGSize of.
+*/
++ (CGSize)sizeForPageSize:(BNPageSize)pageSize;
+
+/**
 The size of the paper to print on.
 */
 - (CGSize)actualPageSize;
