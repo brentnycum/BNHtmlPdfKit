@@ -20,22 +20,77 @@ This all started with a [post of mine](http://itsbrent.net/2011/06/printing-conv
 
 ## Usage
 
+### Blocks
+
+There are quite a few block methods provided for convenience.
+
+```objective-c
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure;
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url pageSize:(BNPageSize)pageSize success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure;
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url pageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure;
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url pageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape topAndBottomMarginSize:(CGFloat)topAndBottom leftAndRightMarginSize:(CGFloat)leftAndRight success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure;
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure;
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename pageSize:(BNPageSize)pageSize success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure;
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename pageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure;
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename pageSize:(BNPageSize)pageSize isLandscape:(BOOL)landscape topAndBottomMarginSize:(CGFloat)topAndBottom leftAndRightMarginSize:(CGFloat)leftAndRight success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure;
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url customPageSize:(CGSize)pageSize success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure;
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url customPageSize:(CGSize)pageSize topAndBottomMarginSize:(CGFloat)topAndBottom leftAndRightMarginSize:(CGFloat)leftAndRight success:(void (^)(NSData *pdfData))completion failure:(void (^)(NSError *error))failure;
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename customPageSize:(CGSize)pageSize success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure;
+
++ (BNHtmlPdfKit *)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)filename customPageSize:(CGSize)pageSize topAndBottomMarginSize:(CGFloat)topAndBottom leftAndRightMarginSize:(CGFloat)leftAndRight success:(void (^)(NSString *filename))completion failure:(void (^)(NSError *error))failure;
+```
+
+To use them simply call:
+
+```objective-c
+
+htmlPdfKit = [BNHtmlPdfKit saveUrlAsPdf:[NSURL URLWithString:@"http://itsbrent.net"] toFile:@"...itsbrent.pdf" pageSize:BNPageSizeA6 success:^(NSString *pdfFileName) {
+
+		NSLog(@"Done");
+
+	} failure:^(NSError *err) {
+
+		NSLog(@"Failure");
+
+	}];
+
+```
+
+
+### Delegates
+
 Be sure to retain a reference to the `BNHtmlPdfKit` object outside the scope of the calling method. Otherwise, no delegate methods will be called:
 
 ```objective-c
-@interface MyCoolViewController () {
-    BNHtmlPdfKit *_htmlPdfKit;
-}
-
 - (void) createPdf:(id)sender {
     _htmlPdfKit = [[BNHtmlPdfKit alloc] init];
     _htmlPdfKit.delegate = self;
     [_htmlPdfKit saveUrlAsPdf:[NSURL URLWithString:@"http://itsbrent.net/index.html"]];
 }
 
-@end
+...
 
-// Delegate methods go here...
+- (void)htmlPdfKit:(BNHtmlPdfKit *)htmlPdfKit didSavePdfData:(NSData *)data {
+	...
+}
+
+- (void)htmlPdfKit:(BNHtmlPdfKit *)htmlPdfKit didSavePdfFile:(NSString *)file {
+	...
+}
+
+- (void)htmlPdfKit:(BNHtmlPdfKit *)htmlPdfKit didFailWithError:(NSError *)error {
+	...
+}
 
 ```
 
