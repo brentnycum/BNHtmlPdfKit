@@ -373,6 +373,14 @@
 	return CGSizeZero;
 }
 
+- (NSURL *)baseUrl {
+    if (!_baseUrl) {
+        _baseUrl = [NSURL URLWithString:@"http://localhost"];
+	}
+    
+    return _baseUrl;
+}
+
 #pragma mark - Methods
 
 - (CGSize)actualPageSize {
@@ -392,12 +400,12 @@
     
     if (pageHeader) {
         self.headerWebView = [[UIWebView alloc] init];
-        [self.headerWebView loadHTMLString:pageHeader baseURL:[NSURL URLWithString:@"http://localhost"]];
+        [self.headerWebView loadHTMLString:pageHeader baseURL:self.baseUrl];
     }
 
     if (pageFooter) {
         self.footerWebView = [[UIWebView alloc] init];
-        [self.footerWebView loadHTMLString:pageFooter baseURL:[NSURL URLWithString:@"http://localhost"]];
+        [self.footerWebView loadHTMLString:pageFooter baseURL:self.baseUrl];
     }
     
     [self saveHtmlAsPdf:html toFile:file];
@@ -408,12 +416,7 @@
 
 	self.webView = [[UIWebView alloc] init];
 	self.webView.delegate = self;
-
-	if (!self.baseUrl) {
-		[self.webView loadHTMLString:html baseURL:[NSURL URLWithString:@"http://localhost"]];
-	} else {
-		[self.webView loadHTMLString:html baseURL:self.baseUrl];
-	}
+    [self.webView loadHTMLString:html baseURL:self.baseUrl];
 }
 
 - (void)saveUrlAsPdf:(NSURL *)url {
