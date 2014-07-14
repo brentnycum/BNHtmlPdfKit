@@ -18,6 +18,9 @@
 @property (nonatomic, assign) CGFloat topAndBottomMarginSize;
 @property (nonatomic, assign) CGFloat leftAndRightMarginSize;
 
+@property (nonatomic, strong) UIWebView *pageHeader;
+@property (nonatomic, strong) UIWebView *pageFooter;
+
 @end
 
 
@@ -33,6 +36,32 @@
 	return CGRectInset([self paperRect], self.leftAndRightMarginSize, self.topAndBottomMarginSize);
 }
 
+- (void)drawHeaderForPageAtIndex:(NSInteger)pageIndex inRect:(CGRect)headerRect {
+    if (self.pageHeader) {
+        [self.pageHeader setFrame:headerRect];
+        UIImage *image = [self imageFromWebView:self.pageHeader];
+        [image drawInRect:headerRect];
+    }
+}
+
+- (void)drawFooterForPageAtIndex:(NSInteger)pageIndex inRect:(CGRect)footerRect {
+    if (self.pageFooter) {
+        [self.pageFooter setFrame:footerRect];
+        UIImage *image = [self imageFromWebView:self.pageFooter];
+        [image drawInRect:footerRect];
+    }
+    
+}
+
+- (UIImage *)imageFromWebView:(UIWebView *)webView {
+    UIGraphicsBeginImageContextWithOptions(webView.frame.size, NO, 0.0);
+    [self.pageHeader.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
+
 @end
 
 
@@ -47,6 +76,8 @@
 
 @property (nonatomic, copy) NSString *outputFile;
 @property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) UIWebView *headerWebView;
+@property (nonatomic, strong) UIWebView *footerWebView;
 
 @property (nonatomic, copy) void (^dataCompletionBlock)(NSData *pdfData);
 @property (nonatomic, copy) void (^fileCompletionBlock)(NSString *pdfFileName);
@@ -342,6 +373,14 @@
 	return CGSizeZero;
 }
 
+- (NSURL *)baseUrl {
+    if (!_baseUrl) {
+        _baseUrl = [NSURL URLWithString:@"http://localhost"];
+	}
+    
+    return _baseUrl;
+}
+
 #pragma mark - Methods
 
 - (CGSize)actualPageSize {
@@ -356,17 +395,28 @@
 	[self saveHtmlAsPdf:html toFile:nil];
 }
 
+- (void)saveHtmlAsPdf:(NSString *)html pageHeader:(NSString *)pageHeader
+           pageFooter:(NSString *)pageFooter toFile:(NSString *)file {
+    
+    if (pageHeader) {
+        self.headerWebView = [[UIWebView alloc] init];
+        [self.headerWebView loadHTMLString:pageHeader baseURL:self.baseUrl];
+    }
+
+    if (pageFooter) {
+        self.footerWebView = [[UIWebView alloc] init];
+        [self.footerWebView loadHTMLString:pageFooter baseURL:self.baseUrl];
+    }
+    
+    [self saveHtmlAsPdf:html toFile:file];
+}
+
 - (void)saveHtmlAsPdf:(NSString *)html toFile:(NSString *)file {
 	self.outputFile = file;
 
 	self.webView = [[UIWebView alloc] init];
 	self.webView.delegate = self;
-
-	if (!self.baseUrl) {
-		[self.webView loadHTMLString:html baseURL:[NSURL URLWithString:@"http://localhost"]];
-	} else {
-		[self.webView loadHTMLString:html baseURL:self.baseUrl];
-	}
+    [self.webView loadHTMLString:html baseURL:self.baseUrl];
 }
 
 - (void)saveUrlAsPdf:(NSURL *)url {
@@ -438,7 +488,9 @@
 - (void)_savePdf {
 	if (!self.webView) {
 		return;
-	}
+	} 
+    CGSize pageSize = [self actualPageSize];
+	CGRect pageRect = CGRectMake(0, 0, pageSize.width, pageSize.height);
 
 	UIPrintFormatter *formatter = self.webView.viewPrintFormatter;
 
@@ -446,12 +498,19 @@
 	renderer.topAndBottomMarginSize = self.topAndBottomMarginSize;
 	renderer.leftAndRightMarginSize = self.leftAndRightMarginSize;
 
+    if (self.headerWebView) {
+        renderer.headerHeight = 50.0f;
+        renderer.pageHeader = self.headerWebView;
+    }
+
+    if (self.footerWebView) {
+        renderer.footerHeight = 50.0f;
+        renderer.pageFooter = self.footerWebView;
+    }
+    
 	[renderer addPrintFormatter:formatter startingAtPageAtIndex:0];
 
 	NSMutableData *currentReportData = [NSMutableData data];
-
-	CGSize pageSize = [self actualPageSize];
-	CGRect pageRect = CGRectMake(0, 0, pageSize.width, pageSize.height);
 
 	UIGraphicsBeginPDFContextToData(currentReportData, pageRect, nil);
 
