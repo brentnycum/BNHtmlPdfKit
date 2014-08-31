@@ -55,7 +55,7 @@
 
 - (UIImage *)imageFromWebView:(UIWebView *)webView {
     UIGraphicsBeginImageContextWithOptions(webView.frame.size, NO, 0.0);
-    [self.pageHeader.layer renderInContext:UIGraphicsGetCurrentContext()];
+    [webView.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;
