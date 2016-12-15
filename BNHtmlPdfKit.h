@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @protocol BNHtmlPdfKitDelegate;
 
@@ -66,7 +67,7 @@ typedef enum {
 	BNPageSizeCustom
 } BNPageSize;
 
-@interface BNHtmlPdfKit : NSObject
+@interface BNHtmlPdfKit : UIViewController
 
 /**
 The paper size of the generated PDF.

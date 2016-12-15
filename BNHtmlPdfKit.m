@@ -180,6 +180,9 @@
 		// Default 1/4" margins
 		self.topAndBottomMarginSize = 0.25f * 72.0f;
 		self.leftAndRightMarginSize = 0.25f * 72.0f;
+        
+        // I am forcing the webView to load into the window with rect (0,0,1,1) so that our webView delegate methods would be called automatically
+        [self forceLoadView];
 	}
 	return self;
 }
@@ -192,6 +195,9 @@
 		// Default 1/4" margins
 		self.topAndBottomMarginSize = 0.25f * 72.0f;
 		self.leftAndRightMarginSize = 0.25f * 72.0f;
+        
+        // I am forcing the webView to load into the window with rect (0,0,1,1) so that our webView delegate methods would be called automatically
+        [self forceLoadView];
 	}
 	return self;
 }
@@ -204,6 +210,9 @@
 		// Default 1/4" margins
 		self.topAndBottomMarginSize = 0.25f * 72.0f;
 		self.leftAndRightMarginSize = 0.25f * 72.0f;
+        
+        // I am forcing the webView to load into the window with rect (0,0,1,1) so that our webView delegate methods would be called automatically
+        [self forceLoadView];
 	}
 	return self;
 }
@@ -217,15 +226,32 @@
 		// Default 1/4" margins
 		self.topAndBottomMarginSize = 0.25f * 72.0f;
 		self.leftAndRightMarginSize = 0.25f * 72.0f;
+        
+        // I am forcing the webView to load into the window with rect (0,0,1,1) so that our webView delegate methods would be called automatically
+        [self forceLoadView];
 	}
 	return self;
 }
 
-- (void)dealloc {
-	[[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(_timeout) object:nil];
+- (void)terminateWebTask {
+    
+    // After everything I am making the things nil etc.
+    
+    [self.webView stopLoading];
+    self.webView.delegate = nil;
+    [self.webView removeFromSuperview];
+    
+    [self.view removeFromSuperview];
+    
+    self.webView = nil;
+}
+- (void)forceLoadView {
+   
+    [[UIApplication sharedApplication].delegate.window addSubview:self.view];
+    
+    self.view.frame = CGRectMake(0, 0, 1, 1);
+    self.view.alpha = 0.0;
 
-	[self.webView setDelegate:nil];
-	[self.webView stopLoading];
 }
 
 #pragma mark - Class Methods
@@ -359,8 +385,9 @@
 - (void)saveHtmlAsPdf:(NSString *)html toFile:(NSString *)file {
 	self.outputFile = file;
 
-	self.webView = [[UIWebView alloc] init];
-	self.webView.delegate = self;
+    self.webView = [[UIWebView alloc] initWithFrame:self.view.frame];
+    self.webView.delegate = self;
+    [self.view addSubview:self.webView];
 
 	if (!self.baseUrl) {
 		[self.webView loadHTMLString:html baseURL:[NSURL URLWithString:@"http://localhost"]];
@@ -376,8 +403,9 @@
 - (void)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)file {
 	self.outputFile = file;
 
-	self.webView = [[UIWebView alloc] init];
+	self.webView = [[UIWebView alloc] initWithFrame:self.view.frame];
 	self.webView.delegate = self;
+    [self.view addSubview:self.webView];
 
 	if ([self.webView respondsToSelector:@selector(setSuppressesIncrementalRendering:)]) {
 		[self.webView setSuppressesIncrementalRendering:YES];
@@ -413,6 +441,7 @@
 	} else {
 		[self performSelector:@selector(_timeout) withObject:nil afterDelay:1.0f];
 	}
+    
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
@@ -426,7 +455,7 @@
 		[self.delegate htmlPdfKit:self didFailWithError:error];
 	}
 
-	self.webView = nil;
+    [self terminateWebTask];
 }
 
 #pragma mark - Private Methods
@@ -485,8 +514,8 @@
 			[self.delegate htmlPdfKit:self didSavePdfFile:self.outputFile];
 		}
 	}
-
-	self.webView = nil;
+    [self terminateWebTask];
+	//self.webView = nil;
 }
 
 - (CGSize)_sizeFromPageSize:(BNPageSize)pageSize {
