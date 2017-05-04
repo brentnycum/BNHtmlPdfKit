@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @protocol BNHtmlPdfKitDelegate;
 
@@ -296,6 +297,17 @@ Saves an html string to a PDF file.
 @param file The filename of the pdf file to save.
 */
 - (void)saveHtmlAsPdf:(NSString *)html toFile:(NSString *)file;
+
+/**
+ Saves an html string to a PDF file.
+ 
+ @param html The HTML to save as a pdf file.
+ @param pageHeader The header to add to each page. Max 50 px
+ @param pageFooter The footer to add to each page. Max 50 px
+ @param file The filename of the pdf file to save.
+ */
+- (void)saveHtmlAsPdf:(NSString *)html pageHeader:(NSString *)pageHeader
+           pageFooter:(NSString *)pageFooter toFile:(NSString *)file;
 
 /**
 Saves an html string to PDF data.
