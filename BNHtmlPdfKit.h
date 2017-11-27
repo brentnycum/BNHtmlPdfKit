@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <WebKit/WebKit.h>
 
 @protocol BNHtmlPdfKitDelegate;
 
@@ -318,7 +319,7 @@ Saves an webView to PDF data.
 
 @param webView The webView to save as a pdf.
 */
-- (void)saveWebViewAsPdf:(UIWebView *)webView;
+- (void)saveWebViewAsPdf:(WKWebView *)webView;
 
 /**
 Saves webView content to a PDF file.
@@ -326,7 +327,7 @@ Saves webView content to a PDF file.
 @param webView The webView to save as a pdf file.
 @param file The filename of the pdf file to save.
 */
-- (void)saveWebViewAsPdf:(UIWebView *)webView toFile:(NSString *)file;
+- (void)saveWebViewAsPdf:(WKWebView *)webView toFile:(NSString *)file;
 
 /**
 Determine the preferred paper size for general printing. From Pierre Bernard.
