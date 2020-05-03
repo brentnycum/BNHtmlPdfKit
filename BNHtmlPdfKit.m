@@ -378,6 +378,8 @@
 
 	self.webView = [[WKWebView alloc] init];
 	self.webView.navigationDelegate = self;
+	self.webView.configuration.suppressesIncrementalRendering = YES;
+
 	[self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
