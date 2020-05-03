@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <WebKit/WebKit.h>
 
 @protocol BNHtmlPdfKitDelegate;
 
@@ -163,7 +164,6 @@ Creates a BNHtmlPdfKit object to save a URL as a PDF file with BNPageSize.
 @param url URL to save PDF of.
 @param filename Filename to save file as.
 @param pageSize BNPageSize of the page to be generated.
-@param leftAndRight Left and right margin size.
 @param completion Block to be notified when PDF file is generated.
 @param failure Block to be notified of failure.
 */
@@ -318,7 +318,7 @@ Saves an webView to PDF data.
 
 @param webView The webView to save as a pdf.
 */
-- (void)saveWebViewAsPdf:(UIWebView *)webView;
+- (void)saveWebViewAsPdf:(WKWebView *)webView;
 
 /**
 Saves webView content to a PDF file.
@@ -326,7 +326,7 @@ Saves webView content to a PDF file.
 @param webView The webView to save as a pdf file.
 @param file The filename of the pdf file to save.
 */
-- (void)saveWebViewAsPdf:(UIWebView *)webView toFile:(NSString *)file;
+- (void)saveWebViewAsPdf:(WKWebView *)webView toFile:(NSString *)file;
 
 /**
 Determine the preferred paper size for general printing. From Pierre Bernard.
@@ -358,7 +358,6 @@ Sent when pdf data has been generated.
 Sent when pdf data has been generated.
 
 @param htmlPdfKit The `BNHtmlPdfKit` that data is being saved from.
-@param data The PDF data that was created from HTML/URL.
 */
 - (void)htmlPdfKit:(BNHtmlPdfKit *)htmlPdfKit didSavePdfFile:(NSString *)file;
 
