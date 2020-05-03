@@ -38,7 +38,7 @@
 
 #pragma mark - BNHtmlPdfKit Extension
 
-@interface BNHtmlPdfKit () <UIWebViewDelegate>
+@interface BNHtmlPdfKit () <WKNavigationDelegate>
 
 - (CGSize)_sizeFromPageSize:(BNPageSize)pageSize;
 
@@ -46,7 +46,7 @@
 - (void)_savePdf;
 
 @property (nonatomic, copy) NSString *outputFile;
-@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) WKWebView *webView;
 
 @property (nonatomic, copy) void (^dataCompletionBlock)(NSData *pdfData);
 @property (nonatomic, copy) void (^fileCompletionBlock)(NSString *pdfFileName);
@@ -224,7 +224,7 @@
 - (void)dealloc {
 	[[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(_timeout) object:nil];
 
-	[self.webView setDelegate:nil];
+	[self.webView setNavigationDelegate:nil];
 	[self.webView stopLoading];
 }
 
@@ -359,8 +359,8 @@
 - (void)saveHtmlAsPdf:(NSString *)html toFile:(NSString *)file {
 	self.outputFile = file;
 
-	self.webView = [[UIWebView alloc] init];
-	self.webView.delegate = self;
+	self.webView = [[WKWebView alloc] init];
+	self.webView.navigationDelegate = self;
 
 	if (!self.baseUrl) {
 		[self.webView loadHTMLString:html baseURL:[NSURL URLWithString:@"http://localhost"]];
@@ -376,46 +376,47 @@
 - (void)saveUrlAsPdf:(NSURL *)url toFile:(NSString *)file {
 	self.outputFile = file;
 
-	self.webView = [[UIWebView alloc] init];
-	self.webView.delegate = self;
-
-	if ([self.webView respondsToSelector:@selector(setSuppressesIncrementalRendering:)]) {
-		[self.webView setSuppressesIncrementalRendering:YES];
-	}
+	self.webView = [[WKWebView alloc] init];
+	self.webView.navigationDelegate = self;
+	self.webView.configuration.suppressesIncrementalRendering = YES;
 
 	[self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
-- (void)saveWebViewAsPdf:(UIWebView *)webView {
+- (void)saveWebViewAsPdf:(WKWebView *)webView {
 	[self saveWebViewAsPdf:webView toFile:nil];
 }
 
-- (void)saveWebViewAsPdf:(UIWebView *)webView toFile:(NSString *)file {
+- (void)saveWebViewAsPdf:(WKWebView *)webView toFile:(NSString *)file {
 	[[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(_timeout) object:nil];
 
 	self.outputFile = file;
 
-	webView.delegate = self;
+	webView.navigationDelegate = self;
 
 	self.webView = webView;
 }
 
-#pragma mark - UIWebViewDelegate
+#pragma mark - WKWebViewDelegate
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-	NSString *readyState = [webView stringByEvaluatingJavaScriptFromString:@"document.readyState"];
-	BOOL complete = [readyState isEqualToString:@"complete"];
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
 
-	[[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(_timeout) object:nil];
+	[webView evaluateJavaScript:@"document.readyState" completionHandler:^(id _Nullable result, NSError * _Nullable error) {
 
-	if (complete) {
-		[self _savePdf];
-	} else {
-		[self performSelector:@selector(_timeout) withObject:nil afterDelay:1.0f];
-	}
+		NSString * readyState = (NSString *)result;
+		BOOL complete = [readyState isEqualToString:@"complete"];
+
+		[[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(_timeout) object:nil];
+
+		if (complete) {
+			[self _savePdf];
+		} else {
+			[self performSelector:@selector(_timeout) withObject:nil afterDelay:1.0f];
+		}
+	}];
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
 	[[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(_timeout) object:nil];
 
 	if (self.failureBlock) {
